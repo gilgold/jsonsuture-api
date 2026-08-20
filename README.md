@@ -14,6 +14,12 @@ LLMs still return almost-JSON: unquoted keys, trailing commas, code fences, trun
 - **Private by design:** payloads and schemas are processed in memory and not retained.
 - **Cheap to try:** 250 requests/month free; no card required.
 
+## Reproducible benchmark
+
+The checked-in deterministic acceptance benchmark currently passes **14/14 fixed cases**, covering syntax repair, schema behavior, and security guardrails. This is not a claim about every possible corruption and not a competitor comparison. See [methodology and case-level results](docs/BENCHMARK.md) or run `npm run benchmark`.
+
+Important boundary: without a schema, plain prose can be preserved as a valid JSON string. Supply an object/array schema when your application requires structured output; validation will then reject prose.
+
 ## 60-second quick start
 
 Create a free key:

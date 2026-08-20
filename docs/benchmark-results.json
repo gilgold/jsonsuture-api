@@ -1,0 +1,198 @@
+{
+  "benchmark": "JSONSuture deterministic acceptance benchmark",
+  "version": "1.0.0",
+  "methodology": "Fixed synthetic cases with explicit expected outputs. Guardrail cases count as passing only when the documented error code is returned.",
+  "totals": {
+    "cases": 14,
+    "passed": 14,
+    "failed": 0
+  },
+  "results": [
+    {
+      "id": "markdown-fence-single-quotes-python-bool",
+      "category": "repair",
+      "description": "Code fence, single quotes, Python boolean, and trailing comma",
+      "passed": true,
+      "expected": {
+        "name": "Ada",
+        "active": true
+      },
+      "actual": {
+        "name": "Ada",
+        "active": true
+      },
+      "error": null
+    },
+    {
+      "id": "unquoted-keys",
+      "category": "repair",
+      "description": "Unquoted object keys",
+      "passed": true,
+      "expected": {
+        "name": "Ada",
+        "count": 2
+      },
+      "actual": {
+        "name": "Ada",
+        "count": 2
+      },
+      "error": null
+    },
+    {
+      "id": "truncated-nested-object",
+      "category": "repair",
+      "description": "Truncated nested object and array",
+      "passed": true,
+      "expected": {
+        "items": [
+          1,
+          2,
+          {
+            "x": "y"
+          }
+        ]
+      },
+      "actual": {
+        "items": [
+          1,
+          2,
+          {
+            "x": "y"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "javascript-comments",
+      "category": "repair",
+      "description": "JavaScript-style comments around values",
+      "passed": true,
+      "expected": {
+        "ok": true,
+        "n": 2
+      },
+      "actual": {
+        "ok": true,
+        "n": 2
+      },
+      "error": null
+    },
+    {
+      "id": "concatenated-strings",
+      "category": "repair",
+      "description": "Concatenated string literals",
+      "passed": true,
+      "expected": {
+        "message": "hello world"
+      },
+      "actual": {
+        "message": "hello world"
+      },
+      "error": null
+    },
+    {
+      "id": "ellipsis-array",
+      "category": "repair",
+      "description": "Array with an ellipsis placeholder",
+      "passed": true,
+      "expected": {
+        "items": [
+          1,
+          2,
+          4
+        ]
+      },
+      "actual": {
+        "items": [
+          1,
+          2,
+          4
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "schema-valid",
+      "category": "schema",
+      "description": "Valid repaired output passes JSON Schema",
+      "passed": true,
+      "expected": true,
+      "actual": true,
+      "error": null
+    },
+    {
+      "id": "schema-violation",
+      "category": "schema",
+      "description": "Semantic type mismatch is reported, not invented away",
+      "passed": true,
+      "expected": false,
+      "actual": false,
+      "error": null
+    },
+    {
+      "id": "explicit-type-coercion",
+      "category": "schema",
+      "description": "String-to-integer coercion occurs only when enabled",
+      "passed": true,
+      "expected": {
+        "count": 12
+      },
+      "actual": {
+        "count": 12
+      },
+      "error": null
+    },
+    {
+      "id": "explicit-default",
+      "category": "schema",
+      "description": "Schema default is applied only when enabled",
+      "passed": true,
+      "expected": {
+        "name": "Ada",
+        "active": true
+      },
+      "actual": {
+        "name": "Ada",
+        "active": true
+      },
+      "error": null
+    },
+    {
+      "id": "remote-ref-blocked",
+      "category": "guardrail",
+      "description": "Remote schema references are rejected",
+      "passed": true,
+      "expected": "REMOTE_REF_NOT_ALLOWED",
+      "actual": "REMOTE_REF_NOT_ALLOWED",
+      "error": null
+    },
+    {
+      "id": "prototype-pollution-blocked",
+      "category": "guardrail",
+      "description": "Prototype-pollution keys are rejected",
+      "passed": true,
+      "expected": "UNSAFE_KEY",
+      "actual": "UNSAFE_KEY",
+      "error": null
+    },
+    {
+      "id": "empty-input-rejected",
+      "category": "guardrail",
+      "description": "Empty input is rejected instead of fabricated",
+      "passed": true,
+      "expected": "INVALID_INPUT",
+      "actual": "INVALID_INPUT",
+      "error": null
+    },
+    {
+      "id": "plain-prose-rejected-by-object-schema",
+      "category": "schema",
+      "description": "Plain prose is preserved as a string, then rejected by an object schema",
+      "passed": true,
+      "expected": false,
+      "actual": false,
+      "error": null
+    }
+  ]
+}
