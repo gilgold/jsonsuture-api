@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and integration help
+    url: https://github.com/gilgold/jsonsuture-api/discussions
+    about: Ask usage and integration questions in Discussions.
+  - name: API documentation
+    url: https://vesper-3159a405.base44.app/functions/jsonSutureDocs
+    about: Read the live API reference and examples.

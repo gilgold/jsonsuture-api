@@ -1,20 +1,28 @@
 # JSONSuture API
 
-Deterministic JSON repair and JSON Schema validation for AI agents. JSONSuture fixes malformed or truncated JSON without another model call, then returns explicit validation results. It does not store customer payloads.
+**Deterministic JSON repair and JSON Schema validation for AI agents.**
 
-**Live product:** https://vesper-3159a405.base44.app/functions/jsonSutureHome  
-**API docs:** https://vesper-3159a405.base44.app/functions/jsonSutureDocs  
-**OpenAPI:** https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi
+LLMs still return almost-JSON: unquoted keys, trailing commas, code fences, truncated objects, and values that fail your schema. JSONSuture repairs the syntax, validates the result, and reports every transformation — without another model call or payload retention.
 
-## Five-minute quick start
+[Try free](https://vesper-3159a405.base44.app/functions/jsonSutureHome) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi)
 
-Create a free key (250 requests/month):
+## Why use it?
+
+- **Predictable:** deterministic repair, not another probabilistic retry.
+- **Schema-aware:** optional JSON Schema validation, coercion, and defaults.
+- **Agent-ready:** OpenAPI, `llms.txt`, and tool schema included.
+- **Private by design:** payloads and schemas are processed in memory and not retained.
+- **Cheap to try:** 250 requests/month free; no card required.
+
+## 60-second quick start
+
+Create a free key:
 
 ```bash
 curl -X POST https://vesper-3159a405.base44.app/functions/v1CreateKey
 ```
 
-Store the returned key, then repair JSON:
+Store the one-time `api_key`, then repair malformed model output:
 
 ```bash
 curl -X POST https://vesper-3159a405.base44.app/functions/v1RepairJson \
@@ -38,6 +46,55 @@ curl -X POST https://vesper-3159a405.base44.app/functions/v1RepairJson \
 }
 ```
 
+## Drop-in examples
+
+### Node.js 18+
+
+```js
+const response = await fetch(
+  "https://vesper-3159a405.base44.app/functions/v1RepairJson",
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.JSONSUTURE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      text: modelOutput,
+      schema: {
+        type: "object",
+        required: ["answer", "confidence"],
+        properties: {
+          answer: { type: "string" },
+          confidence: { type: "number" },
+        },
+      },
+    }),
+  },
+);
+
+const { result } = await response.json();
+if (!result.schema_valid) throw new Error(JSON.stringify(result.schema_errors));
+console.log(result.data);
+```
+
+### Python 3.9+
+
+```python
+import os, requests
+
+response = requests.post(
+    "https://vesper-3159a405.base44.app/functions/v1RepairJson",
+    headers={"Authorization": f"Bearer {os.environ['JSONSUTURE_API_KEY']}"},
+    json={"text": model_output},
+    timeout=10,
+)
+response.raise_for_status()
+data = response.json()["result"]["data"]
+```
+
+Complete runnable files are in [`examples/`](examples/).
+
 ## Schema validation
 
 ```json
@@ -52,7 +109,17 @@ curl -X POST https://vesper-3159a405.base44.app/functions/v1RepairJson \
 }
 ```
 
-Coercion and defaults are off by default. JSONSuture never makes an LLM call and does not perform semantic fact completion.
+Coercion and defaults are off by default. JSONSuture does not invent semantic facts; it repairs structure and validates the result.
+
+## Pricing
+
+| Plan | Monthly requests | Rate limit | Price |
+|---|---:|---:|---:|
+| Free | 250 | 10/min | $0 |
+| Developer | 10,000 | 60/min | $9/month |
+| Pro | 100,000 | 300/min | $29/month |
+
+Live Stripe Checkout and the customer billing portal are available from the [product page](https://vesper-3159a405.base44.app/functions/jsonSutureHome). Subscriptions renew monthly and can be canceled in the portal.
 
 ## API surface
 
@@ -62,7 +129,7 @@ Coercion and defaults are off by default. JSONSuture never makes an LLM call and
 | `POST /functions/v1RepairJson` | Bearer key | Repair and optionally validate JSON |
 | `GET /functions/jsonSutureHealth` | None | Health and deployed version |
 | `GET /functions/jsonSutureOpenapi` | None | OpenAPI 3.1 document |
-| `POST /functions/jsonSutureCheckout` | Bearer key | Create Stripe Checkout session when configured |
+| `POST /functions/jsonSutureCheckout` | API key | Create a Stripe Checkout Session |
 | `POST /functions/jsonSutureStripeWebhook` | Stripe signature | Apply subscription status and quota changes |
 
 ## Errors
@@ -95,14 +162,6 @@ Expected statuses: 400 invalid input/schema, 401 key failure, 402 quota exhauste
 
 See [SECURITY.md](SECURITY.md) for the threat model.
 
-## Pricing
-
-- Free: $0, 250 calls/month, 10/minute.
-- Developer: $9/month, 10,000 calls, 60/minute.
-- Pro: $29/month, 100,000 calls, 300/minute.
-
-Paid checkout code and signed webhook fulfillment are deployed but intentionally return `BILLING_NOT_CONFIGURED` until Stripe credentials and Price IDs are installed.
-
 ## Local development
 
 ```bash
@@ -111,11 +170,7 @@ npm run build
 npm test
 ```
 
-The tested repair core is in `src/core.ts`. Base44 Deno function adapters are in `functions/`. Entity schemas are in `entities/`.
-
-## Deployment
-
-See [DEPLOYMENT.md](DEPLOYMENT.md). The current production deployment uses Base44 managed Deno functions and entities at zero additional external spend.
+The tested repair core is in `src/core.ts`. Base44 Deno adapters are in `functions/`; schemas are in `entities/`.
 
 ## Agent discovery
 
@@ -124,8 +179,10 @@ See [DEPLOYMENT.md](DEPLOYMENT.md). The current production deployment uses Base4
 - `agent-tool.json` — function/tool input schema
 - `.well-known/ai-plugin.json` — legacy-compatible manifest pointer
 
-A remote MCP server was deliberately omitted from v1: OpenAPI is universally consumable, and a separate persistent transport would add operational surface without improving the single core call. x402 was also deferred because it requires a funded wallet/payment recipient and adds legal/accounting complexity; traditional API keys plus Stripe are the mature launch rail.
+## Feedback and support
+
+Have a malformed-output case the deterministic core should handle? Open a [minimal reproducible issue](https://github.com/gilgold/jsonsuture-api/issues/new) with secrets and private data removed, or start a [discussion](https://github.com/gilgold/jsonsuture-api/discussions).
 
 ## License
 
-MIT for source code. Product terms and privacy summary are on the live landing page.
+MIT for source code. Product terms and privacy details are on the [business site](https://gilgold.github.io/jsonsuture-api/).

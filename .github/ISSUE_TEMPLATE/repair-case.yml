@@ -1,0 +1,40 @@
+name: Repair case
+about: Submit a sanitized malformed-JSON case the deterministic core should handle
+title: "repair: "
+labels: ["repair-case"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Remove secrets, personal data, and proprietary content before submitting. A minimal synthetic reproduction is best.
+  - type: textarea
+    id: input
+    attributes:
+      label: Sanitized malformed input
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected valid JSON
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual JSONSuture response
+      render: json
+  - type: input
+    id: request_id
+    attributes:
+      label: Request ID (optional)
+      description: Include only the req_... identifier, never your API key.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: I removed secrets, credentials, personal data, and proprietary content.
+          required: true
