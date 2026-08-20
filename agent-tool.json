@@ -1,0 +1,21 @@
+{
+  "name": "repair_json",
+  "description": "Repair malformed JSON deterministically and optionally validate the result against a local JSON Schema. Use after an LLM or external tool returns almost-valid JSON. Does not infer missing facts.",
+  "input_schema": {
+    "type": "object",
+    "required": ["text"],
+    "properties": {
+      "text": { "type": "string", "description": "Malformed or valid JSON text, maximum 128 KiB" },
+      "schema": { "type": "object", "description": "Optional JSON Schema; remote refs are rejected" },
+      "options": {
+        "type": "object",
+        "properties": {
+          "coerce_types": { "type": "boolean", "default": false },
+          "use_defaults": { "type": "boolean", "default": false }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  }
+}

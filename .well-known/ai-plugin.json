@@ -1,0 +1,11 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "JSONSuture",
+  "name_for_model": "jsonsuture",
+  "description_for_human": "Repair malformed JSON and validate it against JSON Schema.",
+  "description_for_model": "Use JSONSuture when an LLM or external tool returns malformed or truncated JSON. It repairs syntax deterministically and returns explicit schema validation errors. It does not infer missing facts.",
+  "auth": { "type": "user_http", "authorization_type": "bearer" },
+  "api": { "type": "openapi", "url": "https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi" },
+  "contact_email": "",
+  "legal_info_url": "https://vesper-3159a405.base44.app/functions/jsonSutureHome#legal"
+}

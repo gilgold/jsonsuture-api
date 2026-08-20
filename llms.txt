@@ -1,0 +1,19 @@
+# JSONSuture
+
+> Deterministic JSON repair and JSON Schema validation for AI agents. No LLM calls and no payload retention.
+
+## Use
+- Repair endpoint: https://vesper-3159a405.base44.app/functions/v1RepairJson
+- Create free key: https://vesper-3159a405.base44.app/functions/v1CreateKey
+- Human docs: https://vesper-3159a405.base44.app/functions/jsonSutureDocs
+- OpenAPI 3.1: https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi
+- Health: https://vesper-3159a405.base44.app/functions/jsonSutureHealth
+
+## Authentication
+Send `Authorization: Bearer <JSONSUTURE_API_KEY>`. Create a free key with an unauthenticated POST to the key endpoint. The raw key is shown once.
+
+## Behavior
+The service repairs syntax deterministically. It never calls an LLM and does not invent semantic facts. Type coercion and schema defaults are disabled unless explicitly enabled. Remote schema refs are rejected.
+
+## Limits
+128 KiB input, 32 KiB schema, depth 64, 20,000 JSON nodes. Free tier: 250 calls/month and 10 calls/minute.

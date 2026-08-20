@@ -1,0 +1,25 @@
+{
+  "name": "jsonsuture-api",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Deterministic JSON repair and schema validation for AI agents",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "jsonrepair": "3.15.0",
+    "jsonschema": "1.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.0",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

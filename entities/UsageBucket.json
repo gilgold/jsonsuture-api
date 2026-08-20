@@ -1,0 +1,1 @@
+{"name":"UsageBucket","type":"object","properties":{"bucket_key":{"type":"string"},"key_hash":{"type":"string"},"kind":{"type":"string","enum":["minute","signup_day"]},"count":{"type":"integer"},"expires_at":{"type":"string"}},"required":["bucket_key","key_hash","kind","count","expires_at"]}
