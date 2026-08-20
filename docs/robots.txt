@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gilgold.github.io/jsonsuture-api/sitemap.xml
