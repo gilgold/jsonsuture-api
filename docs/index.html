@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="JSONSuture is a deterministic API that repairs malformed JSON and validates it against JSON Schema without another LLM call.">
+  <title>JSONSuture — Deterministic JSON repair API</title>
+  <style>
+    :root{--bg:#0b1020;--surface:#121a2d;--text:#f4f7ff;--muted:#aab4cc;--accent:#7dd3fc;--line:#26324a;--good:#86efac}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main,nav,footer{max-width:1040px;margin:auto;padding-left:24px;padding-right:24px}nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:24px}.brand{font-weight:850;letter-spacing:.08em;color:var(--text);text-decoration:none}.links{display:flex;gap:18px;flex-wrap:wrap}a{color:var(--accent)}
+    header{padding:76px 0 40px}.label{color:var(--good);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.09em}h1{font-size:clamp(44px,7vw,76px);line-height:1.02;max-width:850px;margin:12px 0 24px}.lead{font-size:21px;color:var(--muted);max-width:760px}.cta{display:inline-block;margin-top:12px;background:var(--accent);color:#07111e;text-decoration:none;font-weight:800;padding:13px 18px;border-radius:9px}
+    section{padding:48px 0}h2{font-size:32px;line-height:1.2}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}.card h3{margin-top:0}.muted{color:var(--muted)}.price{font-size:34px;font-weight:850}.price span{font-size:16px;color:var(--muted)}pre{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;overflow:auto;color:#dbeafe}.legal{border-top:1px solid var(--line)}footer{border-top:1px solid var(--line);color:var(--muted);padding-top:30px;padding-bottom:48px;margin-top:40px}
+    @media(max-width:640px){nav{align-items:flex-start;gap:20px}.links{justify-content:flex-end}header{padding-top:48px}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="#top">JSONSUTURE</a>
+    <div class="links"><a href="#pricing">Pricing</a><a href="https://vesper-3159a405.base44.app/functions/jsonSutureDocs">Docs</a><a href="https://github.com/gilgold/jsonsuture-api">GitHub</a></div>
+  </nav>
+  <main id="top">
+    <header>
+      <div class="label">Deterministic · Private · Agent-ready</div>
+      <h1>Repair the JSON your model almost returned.</h1>
+      <p class="lead">JSONSuture turns malformed model output into valid JSON and optionally validates it against JSON Schema—without another model call, retry loop, or retained payload.</p>
+      <a class="cta" href="https://vesper-3159a405.base44.app/functions/jsonSutureHome">Create a free API key</a>
+    </header>
+
+    <section>
+      <h2>Built for production AI agents</h2>
+      <div class="grid">
+        <article class="card"><h3>Deterministic repair</h3><p class="muted">Repairs common JSON syntax errors locally with predictable behavior and explicit transformations.</p></article>
+        <article class="card"><h3>Schema-aware</h3><p class="muted">Validates JSON Schema and supports opt-in type coercion and default values.</p></article>
+        <article class="card"><h3>No payload retention</h3><p class="muted">Request JSON and schemas are processed in memory and are not written to the product database or logs.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>One request</h2>
+      <pre>curl -X POST https://vesper-3159a405.base44.app/functions/v1RepairJson \
+  -H "Authorization: Bearer $JSONSUTURE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"text":"{name: Ada, active: true,}"}'</pre>
+    </section>
+
+    <section id="pricing">
+      <h2>Simple monthly pricing</h2>
+      <div class="grid">
+        <article class="card"><h3>Free</h3><div class="price">$0</div><p>250 requests/month<br>10 requests/minute</p></article>
+        <article class="card"><h3>Developer</h3><div class="price">$9 <span>/ month</span></div><p>10,000 requests/month<br>60 requests/minute</p></article>
+        <article class="card"><h3>Pro</h3><div class="price">$29 <span>/ month</span></div><p>100,000 requests/month<br>300 requests/minute</p></article>
+      </div>
+      <p class="muted">Subscriptions renew monthly until canceled. Customers can manage or cancel subscriptions through the secure billing portal.</p>
+    </section>
+
+    <section id="terms" class="legal">
+      <h2>Terms of service</h2>
+      <p class="muted">JSONSuture is provided on a best-effort basis without warranties. Customers must not use the service for unlawful activity or process data they are not authorized to handle. Published quotas, rate limits, and abuse controls apply. Paid subscriptions renew monthly and may be canceled before the next billing date to prevent future charges.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy</h2>
+      <p class="muted">JSON request payloads and schemas are not retained. The service stores hashed API keys, plan status, coarse usage counters, request latency, status, and estimated infrastructure cost for authentication, billing, abuse prevention, and reliability. The service does not create advertising profiles or sell customer data.</p>
+    </section>
+
+    <section id="support">
+      <h2>Support</h2>
+      <p class="muted">For product, billing, or security support, open a private-safe request through the <a href="https://github.com/gilgold/jsonsuture-api/issues">JSONSuture issue tracker</a>. Never include API keys, credentials, or private payloads.</p>
+    </section>
+  </main>
+  <footer>
+    JSONSuture · <a href="https://vesper-3159a405.base44.app/functions/jsonSutureHealth">Service status</a> · <a href="https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi">OpenAPI</a> · <a href="#terms">Terms</a> · <a href="#privacy">Privacy</a>
+  </footer>
+</body>
+</html>
