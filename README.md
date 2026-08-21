@@ -4,7 +4,7 @@
 
 LLMs still return almost-JSON: unquoted keys, trailing commas, code fences, truncated objects, and values that fail your schema. JSONSuture repairs the syntax, validates the result, and reports every transformation — without another model call or payload retention.
 
-[Try free](https://vesper-3159a405.base44.app/functions/jsonSutureHome) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi)
+[Try free](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi)
 
 ## Why use it?
 
@@ -125,7 +125,7 @@ Coercion and defaults are off by default. JSONSuture does not invent semantic fa
 | Developer | 10,000 | 60/min | $9/month |
 | Pro | 100,000 | 300/min | $29/month |
 
-Live Stripe Checkout and the customer billing portal are available from the [product page](https://vesper-3159a405.base44.app/functions/jsonSutureHome). Subscriptions renew monthly and can be canceled in the portal.
+Live Stripe Checkout and the customer billing portal are available from the [product page](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github). Subscriptions renew monthly and can be canceled in the portal.
 
 ## API surface
 
