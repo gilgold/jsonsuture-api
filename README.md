@@ -191,6 +191,8 @@ The tested repair core is in `src/core.ts`. Base44 Deno adapters are in `functio
 
 Have a malformed-output case the deterministic core should handle? Open a [minimal reproducible issue](https://github.com/gilgold/jsonsuture-api/issues/new) with secrets and private data removed, or start a [discussion](https://github.com/gilgold/jsonsuture-api/discussions).
 
+For private implementation or billing guidance, email [darkstorm13@gmail.com](mailto:darkstorm13@gmail.com?subject=JSONSuture%20implementation%20help). Share your stack and expected JSON shape—never API keys, credentials, or private payloads.
+
 ## License
 
 MIT for source code. Product terms and privacy details are on the [business site](https://gilgold.github.io/jsonsuture-api/).
