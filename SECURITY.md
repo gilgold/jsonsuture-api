@@ -23,4 +23,4 @@ Base44 entity counters use read/update operations rather than a database-native 
 
 ## Reporting
 
-Open a private GitHub security advisory on the repository. Do not include live API keys or customer payloads.
+Open a private GitHub security advisory on the repository or email darkstorm13@gmail.com. Do not include live API keys or customer payloads.
