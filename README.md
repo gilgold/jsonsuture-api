@@ -4,7 +4,7 @@
 
 LLMs still return almost-JSON: unquoted keys, trailing commas, code fences, truncated objects, and values that fail your schema. JSONSuture repairs the syntax, validates the result, and reports every transformation — without another model call or payload retention.
 
-[Try free](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi)
+[Run a sample in your browser](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi)
 
 ## Why use it?
 
@@ -22,7 +22,9 @@ Important boundary: without a schema, plain prose can be preserved as a valid JS
 
 ## 60-second quick start
 
-Create a free key:
+Prefer no setup? [Create a free key and run a schema-validating sample in the browser](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github).
+
+Or create a free key from your terminal:
 
 ```bash
 curl -X POST https://vesper-3159a405.base44.app/functions/v1CreateKey
