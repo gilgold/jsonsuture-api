@@ -127,12 +127,13 @@ Deno.serve(async (req) => {
     try {
       const response = await fetch(base + '/functions/jsonSutureCheckout', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({plan: button.dataset.plan, apiKey: key, successUrl: location.origin + location.pathname + '?checkout=success', cancelUrl: location.origin + location.pathname + '?checkout=cancelled', returnUrl: location.origin + location.pathname, baseUrl: location.origin, origin: location.origin})
+        headers: {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'},
+        body: JSON.stringify({plan: button.dataset.plan})
       });
       const data = await response.json();
-      if (!response.ok || !data.url) throw new Error(data.error || 'Could not create checkout');
-      location.assign(data.url);
+      const checkoutUrl = data.checkout_url || data.url;
+      if (!response.ok || !checkoutUrl) throw new Error(data.error?.detail || data.error?.code || 'Could not create checkout');
+      location.assign(checkoutUrl);
     } catch (error) {
       output.textContent = error.message || 'Could not create checkout';
       document.querySelectorAll('.buy').forEach((item) => item.disabled = false);
