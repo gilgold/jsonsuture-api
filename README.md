@@ -4,7 +4,7 @@
 
 LLMs still return almost-JSON: unquoted keys, trailing commas, code fences, truncated objects, and values that fail your schema. JSONSuture repairs the syntax, validates the result, and reports every transformation — without another model call or payload retention.
 
-[Run a sample in your browser](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi)
+[Run a sample in your browser](https://vesper-3159a405.base44.app/functions/jsonSutureHome?source=github) · [Business site](https://gilgold.github.io/jsonsuture-api/) · [API docs](https://vesper-3159a405.base44.app/functions/jsonSutureDocs) · [OpenAPI 3.1](https://vesper-3159a405.base44.app/functions/jsonSutureOpenapi) · [Postman collection](postman/JSONSuture.postman_collection.json)
 
 ## Why use it?
 

@@ -1,0 +1,211 @@
+{
+  "info": {
+    "_postman_id": "6aa3a2c3-1dc0-4baa-9bf1-jsonsuture100",
+    "name": "JSONSuture API",
+    "description": "Deterministic repair and JSON Schema validation for malformed LLM output. Start with Health, create a free key once, store it in the apiKey collection variable, then run the repair examples. JSONSuture processes payloads in memory and does not retain them. Never share API keys, credentials, or private payloads in support requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://vesper-3159a405.base44.app/functions",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "",
+      "type": "secret"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health (no key required)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/jsonSutureHealth",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "jsonSutureHealth"
+          ]
+        },
+        "description": "Verify that the production API is healthy without creating data."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Health is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Service reports healthy', () => pm.expect(pm.response.json().ok).to.eql(true));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Create free key (run once)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source\": \"postman\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/v1CreateKey?source=postman",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "v1CreateKey"
+          ],
+          "query": [
+            {
+              "key": "source",
+              "value": "postman"
+            }
+          ]
+        },
+        "description": "Creates a free key with Postman attribution. The raw key is shown once. Run this request only when you need a new key; then copy api_key into the apiKey collection variable."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Key was created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Response contains one-time key', () => pm.expect(body.api_key).to.be.a('string'));",
+              "// Deliberately do not persist the key automatically. Copy it manually into the secret apiKey variable."
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Repair malformed JSON",
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{apiKey}}",
+              "type": "string"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"```json\\n{name: Ada, active: true,}\\n```\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/v1RepairJson",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "v1RepairJson"
+          ]
+        },
+        "description": "Repairs common syntax damage deterministically. The key is sent only in the Authorization header."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Repair succeeded', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Result is structured', () => pm.expect(body.result.data.name).to.eql('Ada'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Repair and validate against schema",
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{apiKey}}",
+              "type": "string"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"{count: '12'}\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"required\": [\"count\"],\n    \"properties\": {\"count\": {\"type\": \"integer\"}}\n  },\n  \"options\": {\"coerce_types\": true}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/v1RepairJson",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "v1RepairJson"
+          ]
+        },
+        "description": "Repairs syntax, opts into type coercion, and validates the result against JSON Schema."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Schema validation succeeded', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Schema is valid', () => pm.expect(body.result.schema_valid).to.eql(true));",
+              "pm.test('Count was coerced', () => pm.expect(body.result.data.count).to.eql(12));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}

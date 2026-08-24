@@ -4,6 +4,7 @@
 
 - Public GitHub repository with working curl example.
 - OpenAPI 3.1 document and agent tool schema.
+- Importable Postman 2.1 collection with health, attributed free-key creation, repair, schema-validation, and security tests. Public API Network publication still requires an authenticated Postman workspace.
 - `llms.txt` and legacy-compatible agent manifest.
 - Landing page, pricing, docs, health endpoint, privacy/terms summary.
 

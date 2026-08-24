@@ -4,7 +4,7 @@ const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers
 const response = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...CORS, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
 const sha256 = async (value: string) => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)))).map((b) => b.toString(16).padStart(2, '0')).join('');
 const randomKey = () => { const bytes = crypto.getRandomValues(new Uint8Array(32)); return `js_live_${btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}`; };
-const SOURCES = new Set(['direct', 'website', 'github', 'guide', 'apis_guru', 'launch_directory', 'community', 'other']);
+const SOURCES = new Set(['direct', 'website', 'github', 'guide', 'apis_guru', 'launch_directory', 'community', 'postman', 'other']);
 
 Deno.serve(async (req) => {
   const requestId = `req_${crypto.randomUUID()}`;
