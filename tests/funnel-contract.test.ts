@@ -20,4 +20,11 @@ describe('paid checkout frontend/backend contract', () => {
   it('posts to the deployed checkout function', () => {
     expect(home).toContain("base + '/functions/jsonSutureCheckout'");
   });
+
+  it('uses the active public Stripe catalog IDs without brittle price-secret dependencies', () => {
+    expect(checkout).toContain("developer: 'price_1U6d9MPHVKJSy1xYzXJJ3fQ8'");
+    expect(checkout).toContain("pro: 'price_1U6d9MPHVKJSy1xY8CH2Pcvp'");
+    expect(checkout).not.toContain("secrets.get('STRIPE_PRICE_DEVELOPER')");
+    expect(checkout).not.toContain("secrets.get('STRIPE_PRICE_PRO')");
+  });
 });
